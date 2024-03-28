@@ -1,8 +1,9 @@
-// // ignore_for_file: library_private_types_in_public_api
-
 // import 'package:dashboard/note_box.dart';
 // import 'package:dashboard/note_card.dart';
 // import 'package:flutter/material.dart';
+// import 'package:sidebarx/sidebarx.dart';
+// // ignore: unused_import
+// import 'package:dashboard/provider.dart';
 
 // void main() {
 //   runApp(MainApp());
@@ -11,24 +12,40 @@
 // class MainApp extends StatelessWidget {
 //   final List<Map<String, String>> noteData = [
 //     {
-//       'title': 'Note 1',
-//       'body': 'test note 1',
+//       'noteId': '1',
+//       'note': 'test note 1',
+//       'trash': 'false',
+//       'archive': 'false',
+//       'pinned': 'false',
+
 //     },
 //     {
-//       'title': 'Note 2',
-//       'body': 'test note 2',
+//       'noteId': '2',
+//       'note': 'test note 2',
+//       'trash': 'false',
+//       'archive': 'false',
+//       'pinned': 'false',
 //     },
 //     {
-//       'title': 'Note 3',
-//       'body': 'test note 3',
+//       'noteId': '3',
+//       'note': 'test note 3',
+//       'trash': 'false',
+//       'archive': 'false',
+//       'pinned': 'false',
 //     },
 //     {
-//       'title': 'Note 4',
-//       'body': 'test note 4',
+//       'noteId': '4',
+//       'note': 'test note 4',
+//       'trash': 'false',
+//       'archive': 'false',
+//       'pinned': 'false',
 //     },
 //     {
-//       'title': 'Note 5',
-//       'body': 'test note 5',
+//       'noteId': '5',
+//       'note': 'test note 5',
+//       'trash': 'false',
+//       'archive': 'false',
+//       'pinned': 'false',
 //     },
 //   ];
 
@@ -49,11 +66,20 @@
 //   const MainScreen({super.key, required this.noteData});
 
 //   @override
+//   // ignore: library_private_types_in_public_api
 //   _MainScreenState createState() => _MainScreenState();
 // }
 
 // class _MainScreenState extends State<MainScreen> {
 //   int selectedIndex = 0;
+//   late final SidebarXController _controller;
+
+//   @override
+//   void initState() {
+//     _controller =
+//         SidebarXController(selectedIndex: selectedIndex, extended: true);
+//     super.initState();
+//   }
 
 //   void selectIndex(int index) {
 //     setState(() {
@@ -109,251 +135,86 @@
 //             width: 1.0,
 //           ),
 //         ),
-//       ),
-//       drawer: Drawer(
-//         child: ListView(
-//           children: <Widget>[
-//             ListTile(
-//               leading: const Icon(Icons.lightbulb),
-//               title: const Text("Notes"),
-//               onTap: () {
-//                 selectIndex(0);
-//                 Navigator.pop(context); // Close the drawer
-//               },
-//               tileColor: selectedIndex == 0 ? Colors.blue : Colors.white,
-//             ),
-//             ListTile(
-//               leading: const Icon(Icons.notifications),
-//               title: const Text("Reminders"),
-//               onTap: () {
-//                 selectIndex(1);
-//                 Navigator.pop(context); // Close the drawer
-//               },
-//               tileColor: selectedIndex == 1 ? Colors.blue : Colors.white,
-//             ),
-//             ListTile(
-//               leading: const Icon(Icons.edit),
-//               title: const Text("Edit Labels"),
-//               onTap: () {
-//                 selectIndex(2);
-//                 Navigator.pop(context); // Close the drawer
-//               },
-//               tileColor: selectedIndex == 2 ? Colors.blue : Colors.white,
-//             ),
-//             ListTile(
-//               leading: const Icon(Icons.archive),
-//               title: const Text("Archive"),
-//               onTap: () {
-//                 selectIndex(3);
-//                 Navigator.pop(context); // Close the drawer
-//               },
-//               tileColor: selectedIndex == 3 ? Colors.blue : Colors.white,
-//             ),
-//             ListTile(
-//               leading: const Icon(Icons.delete),
-//               title: const Text("Bin"),
-//               onTap: () {
-//                 selectIndex(4);
-//                 Navigator.pop(context); // Close the drawer
-//               },
-//               tileColor: selectedIndex == 4 ? Colors.blue : Colors.white,
-//             ),
-//           ],
+//         leading: IconButton(
+//           icon: const Icon(Icons.menu),
+//           onPressed: () {
+//             _controller.setExtended(!_controller.extended);
+//           },
 //         ),
 //       ),
-//       body: Center(
-//         child: Padding(
-//           padding: const EdgeInsets.all(15.0),
-//           child: Column(
-//             children: [
-//               const NoteBox(),
-//               SizedBox(
-//                 width: MediaQuery.of(context).size.width * 0.5,
-//                 child: GridView.builder(
-//                   padding: const EdgeInsets.all(20),
-//                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-//                     crossAxisCount: 4,
-//                     mainAxisSpacing: 8,
-//                     crossAxisSpacing: 8,
-//                   ),
-//                   shrinkWrap: true,
-//                   itemCount: widget.noteData.length,
-//                   itemBuilder: (context, index) {
-//                     return Container(
-//                       decoration: BoxDecoration(
-//                         color: Colors.white,
-//                         borderRadius: BorderRadius.circular(8),
-//                         // boxShadow: [
-//                         //   BoxShadow(
-//                         //     color: Colors.grey.withOpacity(0.5),
-//                         //     spreadRadius: 2,
-//                         //     blurRadius: 3,
-//                         //     offset: const Offset(0, 3),
-//                         //   ),
-//                         // ],
-//                       ),
-//                       child: NoteCard(
-//                         title: widget.noteData[index]['title']!,
-//                         body: widget.noteData[index]['body']!,
-//                         color: Colors.yellow,
-//                         labels: const ['Label 1', 'Label 2'],
-//                       ),
-//                     );
-//                   },
-//                 ),
-//               ),
-//             ],
+//       body: Row(
+//         children: [
+//           ExampleSidebarX(
+//             controller: _controller,
+//             onItemSelected: selectIndex,
 //           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// ignore_for_file: library_private_types_in_public_api, unused_element
-
-// import 'package:dashboard/note_box.dart';
-// import 'package:dashboard/note_card.dart';
-// import 'package:flutter/material.dart';
-// import 'package:sidebarx/sidebarx.dart';
-
-// void main() {
-//   runApp(MainApp());
-// }
-
-// class MainApp extends StatelessWidget {
-//   final List<Map<String, String>> noteData = [
-//     {
-//       'title': 'Note 1',
-//       'body': 'test note 1',
-//     },
-//     {
-//       'title': 'Note 2',
-//       'body': 'test note 2',
-//     },
-//     {
-//       'title': 'Note 3',
-//       'body': 'test note 3',
-//     },
-//     {
-//       'title': 'Note 4',
-//       'body': 'test note 4',
-//     },
-//     {
-//       'title': 'Note 5',
-//       'body': 'test note 5',
-//     },
-//   ];
-
-//   MainApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       home: MainScreen(noteData: noteData),
-//     );
-//   }
-// }
-
-// class MainScreen extends StatefulWidget {
-//   final List<Map<String, String>> noteData;
-
-//   const MainScreen({super.key, required this.noteData});
-
-//   @override
-//   _MainScreenState createState() => _MainScreenState();
-// }
-
-
-// class _MainScreenState extends State<MainScreen> {
-//   int selectedIndex = 0;
-//   late final SidebarXController _controller;
-
-//   @override
-//   void initState() {
-//     _controller =
-//         SidebarXController(selectedIndex: selectedIndex, extended: true);
-//     super.initState();
-//   }
-
-//   void selectIndex(int index) {
-//     setState(() {
-//       selectedIndex = index;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         // AppBar code remains unchanged
-//       ),
-//       drawer: ExampleSidebarX(
-//         controller: _controller,
-//         onItemSelected: selectIndex, // Pass the callback function
-//       ),
-//       body: Center(
-//         child: Padding(
-//           padding: const EdgeInsets.all(15.0),
-//           child: Column(
-//             children: [
-//               if (selectedIndex == 0)
-//                 Column(
+//           Expanded(
+//             child: Center(
+//               child: Padding(
+//                 padding: const EdgeInsets.all(15.0),
+//                 child: Column(
 //                   children: [
-//                     const NoteBox(),
-//                     SizedBox(
-//                       width: MediaQuery.of(context).size.width * 0.5,
-//                       child: GridView.builder(
-//                         padding: const EdgeInsets.all(20),
-//                         gridDelegate:
-//                             const SliverGridDelegateWithFixedCrossAxisCount(
-//                           crossAxisCount: 4,
-//                           mainAxisSpacing: 8,
-//                           crossAxisSpacing: 8,
-//                         ),
-//                         shrinkWrap: true,
-//                         itemCount: widget.noteData.length,
-//                         itemBuilder: (context, index) {
-//                           return Container(
-//                             decoration: BoxDecoration(
-//                               color: Colors.white,
-//                               borderRadius: BorderRadius.circular(8),
+//                     if (selectedIndex == 0)
+//                       Column(
+//                         children: [
+//                           const NoteBox(),
+//                           SizedBox(
+//                             width: MediaQuery.of(context).size.width * 0.5,
+//                             child: GridView.builder(
+//                               padding: const EdgeInsets.all(20),
+//                               gridDelegate:
+//                                   const SliverGridDelegateWithFixedCrossAxisCount(
+//                                 crossAxisCount: 4,
+//                                 mainAxisSpacing: 8,
+//                                 crossAxisSpacing: 8,
+//                               ),
+//                               shrinkWrap: true,
+//                               itemCount: widget.noteData.length,
+//                               itemBuilder: (context, index) {
+//                                 return Container(
+//                                   decoration: BoxDecoration(
+//                                     color: Colors.white,
+//                                     borderRadius: BorderRadius.circular(8),
+//                                   ),
+//                                   child: NoteCard(
+//                                     noteId: int.parse(widget.noteData[index]['noteId']!),
+//                                     note: widget.noteData[index]['note']!,
+//                                     trash: widget.noteData[index]['trash'] == 'false',
+//                                     archive: widget.noteData[index]['archive'] == 'false',
+//                                     pinned: widget.noteData[index]['pinned'] == 'false',
+//                                     color: Colors.yellow,
+//                                     labels: const [],
+//                                   ),
+//                                 );
+//                               },
 //                             ),
-//                             child: NoteCard(
-//                               title: widget.noteData[index]['title']!,
-//                               body: widget.noteData[index]['body']!,
-//                               color: Colors.yellow,
-//                               labels: const ['Label 1', 'Label 2'],
-//                             ),
-//                           );
-//                         },
+//                           ),
+//                         ],
 //                       ),
-//                     ),
+//                     if (selectedIndex == 1 || selectedIndex == 2)
+//                       Center(
+//                         child: Text(
+//                           selectedIndex == 1 ? 'Archive' : 'Bin',
+//                           style: Theme.of(context).textTheme.headlineSmall,
+//                         ),
+//                       ),
 //                   ],
 //                 ),
-//               if (selectedIndex == 1 || selectedIndex == 2)
-//                 Center(
-//                   child: Text(
-//                     selectedIndex == 1 ? 'Archive' : 'Bin',
-//                     style: Theme.of(context).textTheme.headlineSmall,
-//                   ),
-//                 ),
-//             ],
+//               ),
+//             ),
 //           ),
-//         ),
+//         ],
 //       ),
 //     );
 //   }
 // }
-
 
 // class ExampleSidebarX extends StatelessWidget {
 //   const ExampleSidebarX({
-//     Key? key,
+//     super.key,
 //     required this.controller,
 //     required this.onItemSelected,
-//   }) : super(key: key);
+//   });
 
 //   final SidebarXController controller;
 //   final Function(int) onItemSelected;
@@ -385,6 +246,12 @@
 //           gradient: const LinearGradient(
 //             colors: [accentCanvasColor, canvasColor],
 //           ),
+//           boxShadow: [
+//             BoxShadow(
+//               color: Colors.black.withOpacity(0.28),
+//               blurRadius: 30,
+//             )
+//           ],
 //         ),
 //         iconTheme: IconThemeData(
 //           color: Colors.black.withOpacity(0.7),
@@ -429,17 +296,13 @@
 //   }
 // }
 
-// const primaryColor = Color(0xFF685BFF);
-// const canvasColor = Colors.white;
-// const scaffoldBackgroundColor = Color.fromARGB(255, 76, 76, 201);
-// const accentCanvasColor = Color.fromARGB(255, 76, 76, 201);
-// const white = Colors.white;
-// final actionColor = const Color(0xFF5F5FA7).withOpacity(0.6);
-// final divider = Divider(color: white.withOpacity(0.3), height: 1);
+// ignore: unused_import
+import 'dart:convert';
 
 import 'package:dashboard/note_box.dart';
 import 'package:dashboard/note_card.dart';
 import 'package:flutter/material.dart';
+import 'package:dashboard/provider.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 void main() {
@@ -447,44 +310,68 @@ void main() {
 }
 
 class MainApp extends StatelessWidget {
-  final List<Map<String, String>> noteData = [
-    {
-      'title': 'Note 1',
-      'body': 'test note 1',
-    },
-    {
-      'title': 'Note 2',
-      'body': 'test note 2',
-    },
-    {
-      'title': 'Note 3',
-      'body': 'test note 3',
-    },
-    {
-      'title': 'Note 4',
-      'body': 'test note 4',
-    },
-    {
-      'title': 'Note 5',
-      'body': 'test note 5',
-    },
-  ];
+  final Provider provider = Provider();
 
-  MainApp({super.key});
+  MainApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MainScreen(noteData: noteData),
-    );
-  }
+Widget build(BuildContext context) {
+  return MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: FutureBuilder(
+      future: provider.fetch(),
+      builder: (context, AsyncSnapshot<List<Map<String, String>>> notesSnapshot) {
+        if (notesSnapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (notesSnapshot.hasError) {
+          return Text('Error: ${notesSnapshot.error}');
+        } else {
+          return FutureBuilder(
+            future: provider.fetchArchivedNotes(),
+            builder: (context, AsyncSnapshot<List<Map<String, String>>> archivedNotesSnapshot) {
+              if (archivedNotesSnapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+              } else if (archivedNotesSnapshot.hasError) {
+                return Text('Error: ${archivedNotesSnapshot.error}');
+              } else {
+                return FutureBuilder(
+                  future: provider.fetchTrashedNotes(),
+                  builder: (context, AsyncSnapshot<List<Map<String, String>>> trashedNotesSnapshot) {
+                    if (trashedNotesSnapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    } else if (trashedNotesSnapshot.hasError) {
+                      return Text('Error: ${trashedNotesSnapshot.error}');
+                    } else {
+                      return MainScreen(
+                        noteData: notesSnapshot.data!,
+                        archivedNoteData: archivedNotesSnapshot.data!,
+                        trashedNoteData: trashedNotesSnapshot.data!,
+                      );
+                    }
+                  },
+                );
+              }
+            },
+          );
+        }
+      },
+    ),
+  );
 }
+}
+
 
 class MainScreen extends StatefulWidget {
   final List<Map<String, String>> noteData;
+  final List<Map<String, String>> archivedNoteData;
+  final List<Map<String, String>> trashedNoteData;
 
-  const MainScreen({super.key, required this.noteData});
+  const MainScreen({
+    Key? key,
+    required this.noteData,
+    required this.archivedNoteData,
+    required this.trashedNoteData,
+  }) : super(key: key);
 
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -496,8 +383,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
-    _controller =
-        SidebarXController(selectedIndex: selectedIndex, extended: true);
+    _controller = SidebarXController(selectedIndex: selectedIndex, extended: true);
     super.initState();
   }
 
@@ -582,8 +468,7 @@ class _MainScreenState extends State<MainScreen> {
                             width: MediaQuery.of(context).size.width * 0.5,
                             child: GridView.builder(
                               padding: const EdgeInsets.all(20),
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 4,
                                 mainAxisSpacing: 8,
                                 crossAxisSpacing: 8,
@@ -597,10 +482,13 @@ class _MainScreenState extends State<MainScreen> {
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: NoteCard(
-                                    title: widget.noteData[index]['title']!,
-                                    body: widget.noteData[index]['body']!,
-                                    color: Colors.yellow,
-                                    labels: const ['Label 1', 'Label 2'],
+                                    noteId: int.parse(widget.noteData[index]['noteId']!),
+                                    note: widget.noteData[index]['note']!,
+                                    trash: bool.parse(widget.noteData[index]['trash']!),
+                                    archive: bool.parse(widget.noteData[index]['archive']!),
+                                    pinned: bool.parse(widget.noteData[index]['pinned']!),
+                                    color: Colors.white,
+                                    labels: const [],
                                   ),
                                 );
                               },
@@ -608,12 +496,77 @@ class _MainScreenState extends State<MainScreen> {
                           ),
                         ],
                       ),
-                    if (selectedIndex == 1 || selectedIndex == 2)
-                      Center(
-                        child: Text(
-                          selectedIndex == 1 ? 'Archive' : 'Bin',
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        ),
+                    if (selectedIndex == 1)
+                      Column(
+                        children: [
+                          const NoteBox(),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            child: GridView.builder(
+                              padding: const EdgeInsets.all(20),
+                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 4,
+                                mainAxisSpacing: 8,
+                                crossAxisSpacing: 8,
+                              ),
+                              shrinkWrap: true,
+                              itemCount: widget.archivedNoteData.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: NoteCard(
+                                    noteId: int.parse(widget.archivedNoteData[index]['noteId']!),
+                                    note: widget.archivedNoteData[index]['note']!,
+                                    trash: bool.parse(widget.archivedNoteData[index]['trash']!),
+                                    archive: bool.parse(widget.archivedNoteData[index]['archive']!),
+                                    pinned: bool.parse(widget.archivedNoteData[index]['pinned']!),
+                                    color: Colors.white,
+                                    labels: const [],
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    if (selectedIndex == 2)
+                      Column(
+                        children: [
+                          const NoteBox(),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            child: GridView.builder(
+                              padding: const EdgeInsets.all(20),
+                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 4,
+                                mainAxisSpacing: 8,
+                                crossAxisSpacing: 8,
+                              ),
+                              shrinkWrap: true,
+                              itemCount: widget.trashedNoteData.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: NoteCard(
+                                    noteId: int.parse(widget.trashedNoteData[index]['noteId']!),
+                                    note: widget.trashedNoteData[index]['note']!,
+                                    trash: bool.parse(widget.trashedNoteData[index]['trash']!),
+                                    archive: bool.parse(widget.trashedNoteData[index]['archive']!),
+                                    pinned: bool.parse(widget.trashedNoteData[index]['pinned']!),
+                                    color: Colors.white, // Adjust color as desired for trashed notes
+                                    labels: const [],
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                   ],
                 ),
